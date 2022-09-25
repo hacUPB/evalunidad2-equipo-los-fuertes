@@ -7,7 +7,7 @@
 // EventList class
 typedef struct _eventList
 {
-    char isEmpty;
+    int isEmpty;
     Event *head;
     Event *last;
 } EventList;
