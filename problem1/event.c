@@ -7,11 +7,11 @@
 
 Event *CreateEvent(char *name)
 {
-
-    struct _event *EventoCreado = (struct _event*) malloc(sizeof(struct _event));
-    strcpy(EventoCreado->eventName,name);
+     char a[15];
+    Event *EventoCreado = malloc(sizeof(Event));
+    strncpy(EventoCreado->eventName,name,sizeof(a));
     EventoCreado->next = NULL;
-    return EventoCreado;
+    return   EventoCreado;
 
 }
 
