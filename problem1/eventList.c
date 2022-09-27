@@ -21,16 +21,48 @@ EventList *CreateEventList(void)
 
 void DestroyEventList(EventList *this)
 {
+    Event *CurrentEvent;
 
+    while (this->head != NULL)
+    {
+        CurrentEvent= this->head;
+        this->head = this->head->next;
+        free(CurrentEvent);
+    }
 
-
+    free(this);
 }
 
 Event *SearchEvent(EventList *this, char *name)
 {
+   if (this->isEmpty != 1)
+   {
+        Event *EventoEncontrado = NULL;
+        Event *CurrentEvent = this->head;
+        while (1)
+        {
+            if (CurrentEvent == NULL)
+            {
+              break;
+            }
+        
+            int A = strcmp(CurrentEvent->eventName,name);
+            if (!A)
+            {
+                EventoEncontrado = CurrentEvent;
+                break;
+            }
 
 
+            CurrentEvent=CurrentEvent->next;
+            
+        } 
+        return EventoEncontrado;
 
+    }else
+    {
+        return NULL;
+    }
 }
 
 void AddEvent(EventList *this, Event *event)
@@ -81,14 +113,77 @@ void AddEvent(EventList *this, Event *event)
 
 void RemoveEvent(EventList *this, char *name)
 {
+    Event *EventoAElminar = NULL;
+    Event *CurrentEvent = this->head;
+    Event *EventoAnterior = NULL;
+    while (1)
+    {
+        if (CurrentEvent == NULL)
+        {
+            break;       
+        }
+        
+        int A = strcmp(CurrentEvent->eventName,name);
 
+        if (!A)
+        {
+            EventoAElminar = CurrentEvent;
+            break;
+        }
 
+        EventoAnterior = CurrentEvent;
+        CurrentEvent =CurrentEvent->next;
+            
+    } 
+
+    if (EventoAElminar != NULL)
+        {
+            if (EventoAElminar == this->head)
+            {
+                if (this->head->next == NULL)
+                {
+                    this->isEmpty = 1;
+                    this->head = NULL;
+                    DestroyEvent(EventoAElminar);
+                }else 
+                {
+                    this->head = this->head->next;
+                    DestroyEvent(EventoAElminar);
+                } 
+            }else
+            {
+                EventoAnterior->next = CurrentEvent->next;
+                DestroyEvent(EventoAElminar);
+            }
+        }
+   
 }
+   
 
 void ListEvents(EventList *this)
 {
+    if (this->isEmpty == 1)
+    {
+        printf("empty\n");
+    }
+    else
+    {
+        Event *CurrentEvent = this->head;
 
- 
-    
-    
+         while (1)
+        {
+        
+        if (CurrentEvent == NULL)
+        {
+            break;
+            
+        }
+
+        printf("%s",CurrentEvent->eventName);
+        printf("\n");
+        CurrentEvent =CurrentEvent->next;
+        
+        }
+
+    }
 }
